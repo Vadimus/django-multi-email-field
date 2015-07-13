@@ -4,7 +4,7 @@ from multi_email_field.forms import MultiEmailField as MultiEmailFormField
 
 
 class MultiEmailField(models.Field):
-    description = "A multi e-mail field stored as a multi-lines text"
+    description = "A multi e-mail field stored as a comma separated text"
 
     __metaclass__ = models.SubfieldBase
 
@@ -19,14 +19,14 @@ class MultiEmailField(models.Field):
         if isinstance(value, basestring):
             return value
         elif isinstance(value, list):
-            return "\n".join(value)
+            return ",".join(value)
 
     def to_python(self, value):
         if not value:
             return []
         if isinstance(value, list):
             return value
-        return value.splitlines()
+        return value.split(',')
 
     def get_internal_type(self):
         return 'TextField'
