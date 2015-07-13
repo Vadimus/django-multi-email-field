@@ -18,7 +18,7 @@ class MultiEmailWidget(Textarea):
         elif isinstance(value, six.string_types):
             return value
         elif isinstance(value, list):
-            return "\n".join(value)
+            return ",".join(value)
         raise ValidationError('Invalid format.')
 
     def render(self, name, value, attrs=None):

@@ -7,7 +7,7 @@ from multi_email_field.widgets import MultiEmailWidget
 
 
 class MultiEmailField(forms.Field):
-    message = _('Enter valid email addresses.')
+    message = _('Enter valid email addresses separated by commas.')
     code = 'invalid'
     widget = MultiEmailWidget
 
@@ -16,7 +16,7 @@ class MultiEmailField(forms.Field):
         # Return None if no input was given.
         if not value:
             return []
-        return [v.strip() for v in value.splitlines() if v != ""]
+        return [v.strip() for v in value.split(',') if v != ""]
 
     def validate(self, value):
         "Check if value consists only of valid emails."
