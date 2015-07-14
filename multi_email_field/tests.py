@@ -22,7 +22,7 @@ class MultiEmailFormFieldTest(SimpleTestCase):
         val = '  foo@bar.com    '
         self.assertEquals(['foo@bar.com'], f.to_python(val))
         # Multi lines correct values (test of #0010614)
-        val = 'foo@bar.com\nfoo2@bar2.com\r\nfoo3@bar3.com'
+        val = 'foo@bar.com,\nfoo2@bar2.com,\r\nfoo3@bar3.com,,'
         self.assertEquals(['foo@bar.com', 'foo2@bar2.com', 'foo3@bar3.com'],
                           f.to_python(val))
 
@@ -60,7 +60,7 @@ class MultiEmailWidgetTest(SimpleTestCase):
     def test__prep_value__list(self):
         w = MultiEmailWidget()
         value = w.prep_value(['foo@foo.fr', 'bar@bar.fr'])
-        self.assertEqual(value, 'foo@foo.fr\nbar@bar.fr')
+        self.assertEqual(value, 'foo@foo.fr,bar@bar.fr')
 
     def test__prep_value__raise(self):
         w = MultiEmailWidget()
@@ -72,4 +72,4 @@ class MultiEmailWidgetTest(SimpleTestCase):
         self.assertEqual(1, len(pq('textarea', output)))
         self.assertEqual(
             pq('textarea', output).text(),
-            'foo@foo.fr\nbar@bar.fr')
+            'foo@foo.fr,bar@bar.fr')
